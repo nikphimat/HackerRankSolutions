@@ -6,27 +6,57 @@ import os
 import random
 import re
 import sys
+import itertools
 
 #
-# Complete the 'stdDev' function below.
+# Complete the 'interQuartile' function below.
 #
-# The function accepts INTEGER_ARRAY arr as parameter.
+# The function accepts following parameters:
+#  1. INTEGER_ARRAY values
+#  2. INTEGER_ARRAY freqs
 #
 
-def stdDev(arr):
-    # Print your answers to 1 decimal place within this function
-    mean = sum(arr)/n
-    #print(mean)
-    num = []
-    for i in range(n):
-        #print((arr[i]-mean)**2)
-        num.append((arr[i]-mean)**2)
-    Sdev = math.sqrt(sum(num)/n)
-    print(round(Sdev,1))
+def interQuartile(values, freqs):
+    # Print your answer to 1 decimal place within this function
+    arr = list(itertools.chain.from_iterable(itertools.repeat(values[i], freqs[i])
+    for i in range(n)))
+    arr.sort()
+    #print(arr)
+    N = len(arr)
+    #print(N)
+    mid = int(N/2)
+    #print(mid)
+    #MEDIAN Q2
+    #Q2 = int((arr[mid-1]+arr[mid])/2 if n%2 == 0 else arr[mid])
+    
+    #Lower
+    L = arr[0:mid]
+    #print(L)
+    nL = len(L)
+    midL = int(nL/2)
+    #print(midL)
+    #Q1
+    Q1 = round((L[midL-1]+L[midL])/2 if nL%2 == 0 else L[midL],1)
+    #print(Q1)
+    
+    #Upper
+    U = arr[mid if n%2== 0 else mid+1:]
+    #print(U)
+    nU = len(U)
+    midU= int(nU/2)
+    #print(midU)
+    #Q3
+    Q3 = round((U[midU-1]+U[midU])/2 if nU%2 == 0 else U[midU],1)
+    #print(Q3)
 
+    print(float(Q3-Q1))
+    
+    
 if __name__ == '__main__':
     n = int(input().strip())
 
-    vals = list(map(int, input().rstrip().split()))
+    val = list(map(int, input().rstrip().split()))
 
-    stdDev(vals)
+    freq = list(map(int, input().rstrip().split()))
+
+    interQuartile(val, freq)
